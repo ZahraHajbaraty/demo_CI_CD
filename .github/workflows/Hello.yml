@@ -1,0 +1,19 @@
+#name of workflow
+name: CI
+# event that trigger teh workflow
+on:
+  pushh:
+    branches: ["main"]
+
+# define the job and runner
+jobs:
+  build:
+    run-on: ubuntu-latest
+
+    steps:
+      - name: Run a multi-line script
+        run: |
+        echo hello, world!
+        echo add other actions to build,
+        echo test, and deploy your project.
+
