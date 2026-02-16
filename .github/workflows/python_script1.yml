@@ -11,7 +11,7 @@ on:
 
 jobs:
   build: # this one is the name of the jobs
-    run-on: ubuntu-latest # this one is the runner
+    runs-on: ubuntu-latest # this one is the runner
 
     steps:
       - name: checkout
