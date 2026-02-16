@@ -6,32 +6,38 @@ name: setup_cml
 on:
   pull_request:
     branches: [ "main" ]
-
+    
+permissions: write-all
 
 jobs:
-  build:
+  train_and_report_eval_performance:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
+      
     - name: Set up Python 3.11
       uses: actions/setup-python@v4
       with:
         python-version: "3.11.9"
+        
     - name: set up the cml
       uses: iterative/setup-cml@v1
+      
     - name: train model
       run: |
         pip install -r requirements.txt
+        python preprocessing.py
         python main.py
     - name: run cml results
       run: |
         #add results and plots to markdown
-        cat results.txt >> report.md
-        echo "![training graph](./graph.png)" >> report.md
+        cat metrics.json >> model_eval_report.md
+        echo "![confusion matrix plot](./confusion_matrix.png)" >> model_eval_report.md
 
-        cml comment create report.md
+        cml comment create model_eval_report.md
 
       env:
         REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
