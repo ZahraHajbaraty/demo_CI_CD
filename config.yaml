@@ -36,4 +36,58 @@ jobs:
         run: |
           echo "Hello from $(whoami)"
 
+---
+name: Testing Environment variables
 
+on:
+  pull_request:
+    # Write the target branch
+    branches: main
+
+env:
+  # Set the value of global environment variable
+  GLOBAL_VARIABLE: global_value
+
+jobs:
+  
+  # Job block
+  print_env_and_secrets:
+    runs-on: ubuntu-latest
+    
+    env:
+      # Set the value of local environment variable
+      JOB_VARIABLE: job_value
+
+    steps:
+      - name: Print Variables
+        # Write the environment variable whose value is set
+        run: |
+          echo "Global Variable: ${{ env.GLOBAL_VARIABLE }}"
+          echo "Set job Variable: ${{ env.JOB_VARIABLE }}"
+
+
+
+---
+name: Testing Secrets
+
+on:
+  # Write the event triggering the workflow
+  pull_request:
+    branches: master
+
+jobs:
+  print_secrets:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      # Grant the write permissions
+      pull-requests: write
+
+    steps:
+      - name: Comment on Pull Request
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          # Access the GITHUB_TOKEN token from secrets
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          message: |
+            Hello world ! :wave:
