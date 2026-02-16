@@ -1,0 +1,39 @@
+#name of workflow
+name: CI
+# event that trigger teh workflow
+on:
+  push:
+    branches: ["main"]
+
+# define the job and runner
+jobs:
+  build: # this one is the name of the jobs
+    run-on: ubuntu-latest # this one is the runner
+
+    steps:
+      - name: Run a multi-line script
+        run: |
+        echo hello, world!
+        echo add other actions to build,
+        echo test, and deploy your project.
+
+---
+name: CI
+
+on:
+  push:
+    # Specify the branch that will trigger the workflow
+    branches: [ "myfeature" ]
+
+jobs:
+  # Write name of the job as a key
+  - name: hello-from-runner
+    # Specify the runner machine
+    runs-on: ubuntu-22.04
+    steps:
+      # Write the step name
+      - name: Print Name
+        run: |
+          echo "Hello from $(whoami)"
+
+
