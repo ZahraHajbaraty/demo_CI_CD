@@ -1,14 +1,12 @@
 #name of workflow
 name: CI
 # event that trigger teh workflow
-on:
-  pushh:
-    branches: ["main"]
+on: []
 
 # define the job and runner
 jobs:
   build:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Run a multi-line script
