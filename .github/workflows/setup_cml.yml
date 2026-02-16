@@ -1,0 +1,37 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: setup_cml
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11.9"
+    - name: set up the cml
+      uses: iterative/setup-cml@v1
+    - name: train model
+      run: |
+        pip install -r requirements.txt
+        python main.py
+    - name: run cml results
+      run: |
+        #add results and plots to markdown
+        cat results.txt >> report.md
+        echo "![training graph](./graph.png)" >> report.md
+
+        cml comment create report.md
+
+      env:
+        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
