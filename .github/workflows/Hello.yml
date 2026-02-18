@@ -1,7 +1,9 @@
 #name of workflow
 name: CI
 # event that trigger teh workflow
-on: []
+on:
+  push:
+    branches: [ "main" ]
 
 # define the job and runner
 jobs:
