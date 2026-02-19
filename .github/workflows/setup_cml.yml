@@ -4,7 +4,7 @@
 name: setup_cml
 
 on:
-  pull_request:
+  push:
     branches: [ "main" ]
     
 permissions: write-all
