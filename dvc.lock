@@ -1,0 +1,86 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python preprocessing.py
+    deps:
+    - path: constants.py
+      hash: md5
+      md5: 3782e42a70615be1679856abbb5b0c59
+      size: 1509
+    - path: preprocessing.py
+      hash: md5
+      md5: 80f55ba52e1a205e1273b8c931647c82
+      size: 3365
+    - path: raw_dataset/weatherHistory.csv
+      hash: md5
+      md5: dde600d93650b8ea2b8b604532256745
+      size: 15706771
+    outs:
+    - path: processed_dataset/weatherHistory.csv
+      hash: md5
+      md5: 42f5b6ae604091b78ef67d2435899062
+      size: 10316403
+  train:
+    cmd: python main.py
+    deps:
+    - path: constants.py
+      hash: md5
+      md5: 3782e42a70615be1679856abbb5b0c59
+      size: 1509
+    - path: main.py
+      hash: md5
+      md5: 5c5f1a91493e868da8645187af15cd5f
+      size: 1392
+    - path: metrics_and_plots.py
+      hash: md5
+      md5: af2dc18807279adb9486ab2c19e5aea1
+      size: 1224
+    - path: processed_dataset/weatherHistory.csv
+      hash: md5
+      md5: 42f5b6ae604091b78ef67d2435899062
+      size: 10316403
+    - path: rfc_best_params.json
+      hash: md5
+      md5: 4c6ab31911faaffd2617be91d8052b3e
+      size: 56
+    - path: training.py
+      hash: md5
+      md5: fd56a9526db69982a3be6feafa2192d5
+      size: 4057
+    outs:
+    - path: plots/metrics.json
+      hash: md5
+      md5: 76e9a04509716da7d5646cdc86ebac05
+      size: 67
+    - path: predictions.csv
+      hash: md5
+      md5: 586bcaf413087f9777c63d2be8c504b8
+      size: 95943
+    - path: roc_curve.csv
+      hash: md5
+      md5: 35c002956fa05078931a18d6d19ea2b6
+      size: 2546
+  hp_tune:
+    cmd: python hp_tuning.py
+    deps:
+    - path: constants.py
+      hash: md5
+      md5: 3782e42a70615be1679856abbb5b0c59
+      size: 1509
+    - path: hp_config.json
+      hash: md5
+      md5: 758ea396de399c64a46e8e3c994b66fe
+      size: 98
+    - path: hp_tuning.py
+      hash: md5
+      md5: 5a7351a969b430a8dc71427724611689
+      size: 1312
+    - path: processed_dataset/weatherHistory.csv
+      hash: md5
+      md5: 42f5b6ae604091b78ef67d2435899062
+      size: 10316403
+    outs:
+    - path: hp_tuning_results.md
+      hash: md5
+      md5: 74add5d643b1c0cc8a65c17ec90553e6
+      size: 1208
