@@ -1,31 +1,22 @@
 stages:
   preprocess:
-    cmd: python preprocessing.py
+    cmd: python3 preprocess_dataset.py
     deps:
-    - constants.py
-    - preprocessing.py
-    - raw_dataset/weatherHistory.csv
+    - preprocess_dataset.py
+    - raw_dataset/weather.csv
+    - utils_and_constants.py
     outs:
-    - processed_dataset/weatherHistory.csv
-  train:
-    cmd: python main.py
+    - processed_dataset/weather.csv
+  hp_tune:
+    # Set the hyperparameter tuning command
+    cmd: python3 hp_tuning.py
     deps:
-    - constants.py
-    - main.py
-    - metrics_and_plots.py
-    - processed_dataset/weatherHistory.csv
-    - training.py
-    # outs:
-    # - plots/confusion_matrix.png
-    metrics:
-      - plots/metrics.json:
+    - processed_dataset/weather.csv
+    # Specify the hyperparameter configuration as dependency
+    - hp_config.json
+    # Specify the hyperparameter script as dependency
+    - hp_tuning.py
+    - utils_and_constants.py
+    outs:
+      - hp_tuning_results.md:
           cache: false
-    plots:
-    - predictions.csv: #name of the file containing the predicted labels and true labels
-        template: confusion #style of the plot
-        x: predicted_label #x-axis column name in the predictions.csv
-        y: true_label #y-axis column name in the predictions.csv
-        x_label: 'Predicted Label' #x-axis label
-        y_label: 'True Label' #y-axis label
-        title: 'Confusion Matrix' #title of the plot
-        cache: false
