@@ -37,8 +37,8 @@ jobs:
         #print metrics pf current branch
         dvc metrics show --md >> report.md
         # compare metrics with main branch
-        git fetch --prune
-        dvc metrics diff --md main >> report.md
+        # git fetch --prune
+        # dvc metrics diff --md main >> report.md
         # create CML report
         cml comment create report.md
 
