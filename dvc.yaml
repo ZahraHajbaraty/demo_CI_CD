@@ -17,4 +17,6 @@ stages:
     - training.py
     outs:
     - plots/confusion_matrix.png
-    - plots/metrics.json
+    metrics:
+      - plots/metrics.json:
+          cache: false

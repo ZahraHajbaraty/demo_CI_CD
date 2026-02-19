@@ -69,33 +69,7 @@ def target_encode_categorical_features(df:pd.DataFrame, target_col:str, categori
     return df
 
 
-def impute_and_scale_data(df:pd.DataFrame, numeric_cols:list=[]) -> pd.DataFrame:
-    """
-    Impute missing values and scale numeric features in the DataFrame.
 
-    Parameters:
-    df (pd.DataFrame): The input DataFrame.
-    numeric_cols (list): A list of numeric column names to be imputed and scaled.
-
-    Returns:
-    pd.DataFrame: A DataFrame with imputed and scaled numeric features.
-    """
-    if not numeric_cols:
-        numeric_cols = [c for c in df.select_dtypes(include=[float, int]).columns if c != target_col]
-        # print(f"No numeric columns specified. Scaling all numeric columns: {numeric_cols}")
-    
-    # Impute missing values with the mean
-    imputer = SimpleImputer(strategy='mean')
-    df[numeric_cols] = imputer.fit_transform(df[numeric_cols])
-
-    # Scale the numeric features
-    scaler = StandardScaler()
-    df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
-
-        
-        
-
-    return df
 
 def nan_duplicate(df:pd.DataFrame) -> pd.DataFrame:
     """
@@ -112,11 +86,11 @@ def nan_duplicate(df:pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+
 def main():
     df = read_dataset(filename=DATA_PATH, drop_columns=drop_columns, target_column=target_col)
     categorical_cols = categorical_column(df)
     df = target_encode_categorical_features(df, target_col=target_col, categorical_cols=categorical_cols)
-    df = impute_and_scale_data(df)
     df = nan_duplicate(df)
     delete_and_recreate_dir(PROCESSED_DIR)
     df.to_csv(os.path.join(PROCESSED_DIR, "weatherHistory.csv"), index=False)

@@ -17,13 +17,29 @@ def main():
     X_train, X_test, y_train, y_test = split_data(df, target_col=target_col)
     model = train_model(X_train, y_train)
     metrics = evaluate_model(model, X_test, y_test)
-    print("====================Test Set Metrics==================")
-    print(json.dumps(metrics, indent=2))
-    print("======================================================")
 
     # Save metrics into json file
     save_metrics(metrics)
     plot_confusion_matrix(model, X_test, y_test)
+
+    print("X_train shape:", X_train.shape)
+    print("X_test shape:", X_test.shape)
+
+    print("\ny_train distribution:")
+    print(y_train.value_counts(dropna=False))
+
+    print("\ny_test distribution:")
+    print(y_test.value_counts(dropna=False))
+
+    print("\nIndex overlap:",
+        len(set(X_train.index).intersection(set(X_test.index))))
+
+    print("\nFirst rows of X_train:")
+    print(X_train.head(10))
+
+    print("\nFirst rows of y_train:")
+    print(y_train.head(10))
+
 
 
 
