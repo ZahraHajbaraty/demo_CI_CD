@@ -7,6 +7,13 @@ from constants import DATA_PATH, delete_and_recreate_dir, target_col, drop_colum
 from pathlib import Path
 
 
+def load_data(processed_dir):
+    csv_files = [
+            f for f in os.listdir(PROCESSED_DIR)
+            if f.endswith(".csv")
+        ]
+    df = pd.read_csv(os.path.join(PROCESSED_DIR, csv_files[0]), parse_dates=["Date"])
+    return df
 
 
 def read_dataset(

@@ -71,7 +71,7 @@ def split_data(df, target_col, test_size=0.20, random_state=42):
     return X_train, X_test, y_train, y_test
 
 
-def train_model(X_train, y_train, n_estimators=50, random_state=42, max_depth=10):
+def train_model(X_train, y_train, rfc_params={"max_depth": 1, "n_estimators": 5, "random_state": 42}):
     """
     Train a Random Forest Classifier on the training data.
 
@@ -82,7 +82,7 @@ def train_model(X_train, y_train, n_estimators=50, random_state=42, max_depth=10
     Returns:
     model: The trained Random Forest model.
     """
-    model = RandomForestClassifier(n_estimators=n_estimators, random_state=random_state, max_depth=max_depth)
+    model = RandomForestClassifier(**rfc_params)
     model.fit(X_train, y_train)
     
     return model
@@ -120,7 +120,7 @@ def evaluate_model(model, X_test, y_test):
         "recall": recall,
         "f1_score": f1,
     }
-
-    return json.loads(
-        json.dumps(metrics), parse_float=lambda x: round(float(x), 2)
-    )
+    metrics = json.loads(
+            json.dumps(metrics), parse_float=lambda x: round(float(x), 2)
+        )
+    return metrics, y_pred, model.predict_proba(X_test)

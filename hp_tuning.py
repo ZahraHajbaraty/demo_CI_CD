@@ -3,12 +3,13 @@ import json
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV, train_test_split
-from utils_and_constants import PROCESSED_DATASET, get_hp_tuning_results, load_data
-
+from constants import PROCESSED_DIR, get_hp_tuning_results, target_col
+from training import split_data
+from preprocessing import load_data
 
 def main():
-    X, y = load_data(PROCESSED_DATASET)
-    X_train, _, y_train, _ = train_test_split(X, y, random_state=1993)
+    df= load_data(PROCESSED_DIR)
+    X_train, _, y_train, _ = split_data(df, target_col=target_col)
 
     model = RandomForestClassifier()
     # Read the config file to define the hyperparameter search space
