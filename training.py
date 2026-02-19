@@ -101,6 +101,8 @@ def evaluate_model(model, X_test, y_test):
     None: Prints the classification report and confusion matrix.
     """
     y_pred = model.predict(X_test)
+    predictions = pd.DataFrame({"true_label": y_test, "predicted_label": y_pred})
+    predictions.to_csv("predictions.csv", index=False)
 
     print("Classification Report:", "\n",
            classification_report(y_test, y_pred))

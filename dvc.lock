@@ -41,14 +41,14 @@ stages:
       size: 10316403
     - path: training.py
       hash: md5
-      md5: 2252a161d6a435a32deb2baef80e702f
-      size: 3895
+      md5: e15cdb350d887daec156cf2fb05ad61b
+      size: 4032
     outs:
-    - path: plots/confusion_matrix.png
-      hash: md5
-      md5: f4b70e8e63bd5d5185cbaef1e8316041
-      size: 18224
     - path: plots/metrics.json
       hash: md5
       md5: 76e9a04509716da7d5646cdc86ebac05
       size: 67
+    - path: predictions.csv
+      hash: md5
+      md5: 91949ec52b769dcf2b3899b2fa9bcc8d
+      size: 172675

@@ -15,8 +15,17 @@ stages:
     - metrics_and_plots.py
     - processed_dataset/weatherHistory.csv
     - training.py
-    outs:
-    - plots/confusion_matrix.png
+    # outs:
+    # - plots/confusion_matrix.png
     metrics:
       - plots/metrics.json:
           cache: false
+    plots:
+    - predictions.csv: #name of the file containing the predicted labels and true labels
+        template: confusion #style of the plot
+        x: predicted_label #x-axis column name in the predictions.csv
+        y: true_label #y-axis column name in the predictions.csv
+        x_label: 'Predicted Label' #x-axis label
+        y_label: 'True Label' #y-axis label
+        title: 'Confusion Matrix' #title of the plot
+        cache: false
